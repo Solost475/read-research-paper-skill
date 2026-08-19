@@ -1,6 +1,6 @@
 ---
 name: read-research-paper
-description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique; produce structured notes with page, section, figure, table, and equation anchors, with an optional seed-paper-centered literature-survey expansion. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
+description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique; produce goal-driven stage reports or reading editions with semantic source selection and page, section, figure, table, or equation anchors, with an optional seed-paper-centered literature-survey expansion. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
 ---
 
 # Read Research Paper
@@ -13,6 +13,8 @@ Use S. Keshav's three-pass method as a depth-control workflow rather than readin
 - Match reading depth to the user's goal. Do not perform an expensive third pass when triage or a high-level explanation is enough.
 - Ground substantive statements in the paper with page and section anchors; add figure, table, or equation identifiers when relevant. Prefer a compact form such as `[PDF p. 7, §3.2, Fig. 4]`.
 - Separate `Author claim`, `Paper evidence`, `Reader inference`, and `Not reported`. Never convert an inference into a reported fact.
+- Treat selected source passages as evidence for understanding, not as an inventory to count. Organize them under semantic headings that state the question or cognitive role they resolve; do not use labels such as `Excerpt 1`, `摘录 2`, or similar numbering unless the user explicitly requests it.
+- When a passage is labeled as source text, preserve its wording. Keep source text, translation, and reader commentary visually and semantically distinct.
 - Preserve exact numbers, units, dataset splits, metric direction, and uncertainty. Do not invent missing results, citations, implementation details, or reproducibility claims.
 - Use the user's language unless asked otherwise. Keep standard technical terms in the paper's language when translation would reduce precision.
 - Treat the source paper's human reading-time estimates as depth cues, not agent runtime promises.
@@ -42,15 +44,36 @@ Default an unspecified request to `understand`. If the user explicitly asks for 
 
 Follow the detailed checklist and stopping gates in [references/three-pass-protocol.md](references/three-pass-protocol.md).
 
+For reader-facing multi-pass deliverables, open each pass with:
+
+1. The pass goal: what level of understanding the reader should reach.
+2. The reading actions: which material to inspect and how to use it.
+3. Observable completion criteria: what the reader should be able to explain, reconstruct, or decide afterward.
+
 After each pass:
 
-1. Record what is understood, what remains uncertain, and which source anchors support the result.
-2. Apply the pass gate: `continue`, `stop-sufficient`, `stop-irrelevant`, or `pause-for-background`.
-3. Continue automatically until the selected mode is complete. Do not interrupt the user between passes unless a missing source or critical ambiguity prevents progress.
+1. Record an achievement check grounded in source anchors.
+2. Record what remains uncertain, including missing evidence or implementation details.
+3. Apply the pass-specific gate defined in the protocol: `continue`, `stop-sufficient`, `stop-irrelevant`, `pause-for-background`, or `stop-low-quality` where applicable.
+4. Continue automatically until the selected mode is complete. Do not interrupt the user between passes unless a missing source or critical ambiguity prevents progress.
 
 For `reconstruct`, recreate the work at the level supported by the paper: assumptions, definitions, data flow, objective, algorithm, experimental protocol, metrics, comparisons, and key derivations. Label every unrecoverable detail `Not reported` and explain its consequence.
 
 For `survey`, require at least one seed paper and use its citation-network procedure as a heuristic, then correct for citation-age, venue, author, language, and availability bias. Route broad searches without a seed paper to a dedicated literature-search workflow. Citation count, author repetition, and venue prestige are discovery signals, not quality evidence.
+
+## Compose a goal-driven reading edition
+
+Use this structure when the user asks for a staged reading report, annotated edition, bilingual edition, or a paper reformatted for easier reading:
+
+1. Organize the body by pass and by semantic questions inside each pass, not by the source paper's page order or by numbered excerpts.
+2. Select, reorder, group, and deduplicate only the source passages, figures, tables, equations, and code fragments needed to achieve that pass's goal. If the same evidence matters again, cross-reference its earlier anchored location instead of repeating it unless the comparison itself requires repetition.
+3. Preserve source anchors beside every selected item. A translation may improve access but does not replace the source anchor or become an independent paper claim.
+4. Put interpretation immediately after the evidence it explains. Label author claims, direct paper evidence, reader inferences, externally verified facts, and information not reported by the paper.
+5. Close each pass with an achievement check, unresolved questions, and the selected gate. These sections must be filled for the actual paper, not left as generic templates.
+
+Keep this contract proportional to the requested depth. A short `scan` can use compact goal and gate callouts; do not inflate a simple relevance check into a designed reading edition.
+
+If the user requests a PDF or another designed reading artifact, preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and render the finished artifact for page-by-page QA. Check text overflow, clipped visuals, orphaned semantic headings, abnormal blank pages, and stage-boundary pagination.
 
 ## Produce the report
 
@@ -69,6 +92,8 @@ Scale the report to the selected mode. Include only sections supported by that d
 
 Use compact tables when they improve traceability. For a `scan`, sections 1-3 and 10 are sufficient. For `understand`, include sections 1-5 and 7-10. For `reconstruct`, include all sections.
 
+For a goal-driven reading edition, nest these report elements inside the passes rather than presenting them as an unrelated checklist: identity, verdict, and the five Cs belong to Pass 1; problem, thesis, evidence map, evaluation, and limitations belong to Pass 2; method reconstruction, assumptions, failure modes, and reproduction actions belong to Pass 3. Place unknowns and the next-action gate at the end of every included pass.
+
 ## Quality gate
 
 Before delivery, verify that:
@@ -79,3 +104,6 @@ Before delivery, verify that:
 - Figures and tables were interpreted from labels, legends, axes, captions, and surrounding text, not appearance alone.
 - Missing baselines, controls, citations, artifacts, seeds, hyperparameters, or statistical details are explicitly identified.
 - The report clearly distinguishes paper content from external knowledge and reader judgment.
+- Every selected source passage, figure, table, equation, or code fragment has a clear role in reaching the current pass goal; the report does not present extracts merely because they were available.
+- Each included pass states its goal, reading actions, completion criteria, achieved understanding, unresolved questions, and gate when the deliverable is explicitly staged.
+- Designed artifacts have been rendered and visually checked for overflow, clipping, heading separation, excessive blank space, and readable stage transitions.

@@ -1,4 +1,4 @@
 interface:
   display_name: "三遍式论文阅读"
-  short_description: "用三遍法完成论文筛选、证据理解、复现式深读与阅读报告"
-  default_prompt: "使用 $read-research-paper 分三遍阅读这篇论文，并输出带页码依据的结构化笔记。"
+  short_description: "按目标、证据和达成门控完成三遍式论文阅读与语义重排"
+  default_prompt: "使用 $read-research-paper 分三遍阅读这篇论文：每遍说明目标、阅读动作和达成标准，按语义重排必要证据，并给出未决问题与门控。"

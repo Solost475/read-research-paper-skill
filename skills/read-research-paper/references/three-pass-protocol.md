@@ -3,6 +3,7 @@
 ## Contents
 
 - [Provenance and scope](#provenance-and-scope)
+- [Stage contract and semantic source reorganization](#stage-contract-and-semantic-source-reorganization)
 - [Pass 1 - obtain the bird's-eye view](#pass-1---obtain-the-birds-eye-view)
 - [Pass 2 - understand content and evidence](#pass-2---understand-content-and-evidence)
 - [Pass 3 - virtually reimplement the work](#pass-3---virtually-reimplement-the-work)
@@ -13,6 +14,28 @@
 This protocol distills S. Keshav, *How to Read a Paper*, version of February 17, 2016. The source presents a three-pass method and a citation-network procedure for literature surveys. The evidence-labeling and modern-bias checks below are operational extensions for reliable agent use.
 
 Official source page: https://svr-sk818-web.cl.cam.ac.uk/keshav/publications/htrap.html
+
+## Stage contract and semantic source reorganization
+
+For a reader-facing multi-pass result, make the depth transition explicit.
+
+At the start of every included pass, state:
+
+1. **Goal** - the level of understanding this pass should produce.
+2. **Reading actions** - the source regions and evidence types to inspect, plus how deeply to inspect them.
+3. **Completion criteria** - what the reader should be able to explain, reconstruct, or decide when the pass is complete.
+
+Use selected source material to achieve those goals, not to produce an excerpt inventory. Give every selected passage, figure, table, equation, or code fragment a semantic heading that names the problem it resolves or the evidence it contributes. Avoid numbered labels such as `Excerpt 1` or `摘录 2` unless the user asks for them. Preserve the source wording when presenting original text, keep translations separate, and attach page, section, figure, table, or equation anchors.
+
+Reorder and group evidence when that creates a more coherent reading path. Deduplicate repeated passages; if later passes need the same item, refer back to its anchored location unless a side-by-side comparison requires repetition. Do not let a translation, paraphrase, or reader note appear to be original paper text.
+
+At the end of every included pass, record:
+
+1. **Achievement check** - what is now understood, with anchors.
+2. **Unresolved questions** - what remains uncertain or not reported.
+3. **Gate** - `continue`, `stop-sufficient`, `stop-irrelevant`, `pause-for-background`, or the pass-specific low-quality outcome.
+
+For a designed reading artifact, preserve the requested visual language and original figures or tables unless editing is requested. Render the result and inspect every page for overflow, clipping, orphaned semantic headings, abnormal blank pages, and broken stage boundaries.
 
 ## Pass 1 - obtain the bird's-eye view
 
@@ -38,6 +61,10 @@ Decide what the paper is, why it might matter, and whether deeper reading is jus
 | Contributions | What does the paper claim to add? Separate novelty claims from demonstrated results. |
 | Clarity | Can the central problem, method, and result be recovered from the paper's high-level structure? |
 
+### Completion criteria
+
+Pass 1 is complete when the reader can answer the five Cs, recover the problem, high-level method, and headline result in a short explanation, identify what cannot yet be checked, and make a justified gate decision.
+
 ### Gate
 
 - `continue`: relevant and understandable enough for the next pass.
@@ -62,6 +89,10 @@ Explain the paper's main thrust and supporting evidence without yet resolving ev
 5. Record unfamiliar terms, acronyms, unanswered questions, and claims that need author clarification.
 6. Mark relevant unread references for prerequisites, competing methods, datasets, or evaluation conventions.
 7. Write a short explanation that includes supporting evidence rather than only paraphrasing the abstract.
+
+### Required output and completion criteria
+
+Produce a problem-and-thesis explanation, a claim-evidence map, an evaluation reading, and a list of limitations and open questions. Pass 2 is complete when the reader can accurately explain the paper's main argument and evidence, distinguish direct results from author interpretation and reader inference, and state which details still require reconstruction or external background.
 
 ### Gate
 
@@ -99,7 +130,7 @@ Reconstruct the work closely enough to expose innovations, hidden assumptions, m
 
 ### Completion gate
 
-A third pass is complete only when the reader can reconstruct the paper's argument and method, identify its strongest evidence, and state its assumptions and weaknesses. Do not claim reproducibility merely because the narrative is understandable.
+A third pass is complete only when the reader can reconstruct the paper's argument and method, identify its strongest evidence, state its assumptions and weaknesses, and explain which missing details prevent faithful reproduction. Do not claim reproducibility merely because the narrative is understandable.
 
 The source says this pass can take many hours for beginners and more than one or two hours for experienced human readers. It is the deepest mode, not a fixed runtime requirement.
 
