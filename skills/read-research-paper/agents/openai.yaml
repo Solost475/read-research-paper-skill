@@ -1,4 +1,4 @@
 interface:
   display_name: "论文三遍精读"
-  short_description: "重录关键原文并翻译，内嵌原始图表，生成单文件 HTML"
-  default_prompt: "使用 $read-research-paper 自动完成三遍阅读：重录必要原文并逐段翻译，内嵌图表裁图，以论文短标题、年份、作者和语言命名，输出无需资源目录的单文件 HTML。"
+  short_description: "公式离线排版、原图双击放大，生成自包含双语 HTML"
+  default_prompt: "使用 $read-research-paper 自动完成三遍阅读：重录并翻译必要原文，用离线 MathML 或内联 SVG 正确呈现公式，内嵌原始图表并支持双击放大，输出按论文信息命名的单文件 HTML。"

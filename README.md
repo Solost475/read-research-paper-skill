@@ -15,6 +15,8 @@ It distills S. Keshav's *How to Read a Paper* into an operational workflow for r
 - Each included pass opens with its goal, reading actions, and completion criteria, then closes with an achievement check, unresolved questions, and a gate.
 - Goal-driven reading editions re-typeset only the necessary source passages as selectable text with adjacent translation, organized under semantic headings instead of numbered excerpts.
 - Full source-page and paragraph screenshots are excluded from the reading body; original figures and tables are retained as tight, unmodified crops.
+- Formulas are verified against the visible source and rendered offline as semantic MathML or self-contained inline SVG, with a tightly scoped equation crop reserved for unresolvable cases.
+- Embedded evidence images support double-click enlargement in an accessible inline lightbox, while preserving keyboard and visible-button controls.
 - Evidence labels distinguish `Author claim`, `Paper evidence`, `Reader inference`, and `Not reported`.
 - Source anchors use PDF pages, sections, figures, tables, and equations.
 - HTML reading artifacts use responsive typography, semantic navigation, wide-screen bilingual columns, and narrow-screen single-column flow.
@@ -72,7 +74,7 @@ Explicit invocation:
 Use $read-research-paper to read this paper.
 ```
 
-With no further options, this runs all three passes and returns one verified, self-contained HTML reading edition. For a Chinese-language request on an English paper, it re-typesets the necessary English paragraphs and places Chinese translations beside them on wide screens and below them on narrow screens. Figures and tables remain faithful source crops embedded inside the HTML; full-page screenshots and companion assets directories are not used. Ask for `scan`, `understand`, `survey`, PDF, Markdown, chat-only output, or no HTML to override the default depth or artifact.
+With no further options, this runs all three passes and returns one verified, self-contained HTML reading edition. For a Chinese-language request on an English paper, it re-typesets the necessary English paragraphs and places Chinese translations beside them on wide screens and below them on narrow screens. Formulas are rendered offline instead of exposing raw TeX, and faithful embedded figure and table crops can be enlarged by double-click. Full-page screenshots and companion assets directories are not used. Ask for `scan`, `understand`, `survey`, PDF, Markdown, chat-only output, or no HTML to override the default depth or artifact.
 
 The default filename is derived from paper metadata, for example `large-scale-empirical-study-of-jit-quality-assurance_2013_kamei-etal_zh-en.html`, rather than `read-research-paper.html` or `output.html`.
 

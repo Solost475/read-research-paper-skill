@@ -7,7 +7,9 @@
 - [Three-pass content architecture](#three-pass-content-architecture)
 - [Semantic evidence selection](#semantic-evidence-selection)
 - [Text transcription and visual evidence](#text-transcription-and-visual-evidence)
+- [Formula and algorithm rendering](#formula-and-algorithm-rendering)
 - [Responsive HTML layout](#responsive-html-layout)
+- [Evidence image enlargement](#evidence-image-enlargement)
 - [Generator and file contract](#generator-and-file-contract)
 - [Browser verification gate](#browser-verification-gate)
 
@@ -60,9 +62,22 @@ Organize the end-to-end data flow, objectives and equations, algorithm or compon
 
 - **Prose, headings, captions, and short definitions:** accurately transcribe only the portions needed for the reading goal and encode them as real HTML text. Preserve wording and paragraph order within each selected passage. Add the translation as a separate adjacent block.
 - **Figures and tables:** crop the original visual object from the source and keep it unchanged. Include its number, caption, page or section anchor, meaningful alternative text, and a nearby explanation of what it establishes.
-- **Complex equations:** prefer verified MathML, KaTeX-compatible markup without a remote dependency, or plain Unicode/HTML notation. If reliable transcription is impractical, use a tight crop containing only the equation and identifier, then transcribe the surrounding prose.
+- **Equations and mathematical algorithm lines:** reconstruct and verify their notation against the visible source, then use the offline rendering pipeline below. Preserve the equation or algorithm identifier and surrounding explanatory prose.
 
 Do not place a full PDF page, half-page column screenshot, or ordinary-paragraph screenshot into the reading flow. Page renders are working references for extraction and QA only. If extraction is unreliable, manually verify and transcribe the selected passage from the visible page.
+
+## Formula and algorithm rendering
+
+Treat correct transcription and correct rendering as separate gates. OCR or PDF text extraction may suggest the notation, but the visible source is authoritative.
+
+1. Normalize each selected expression to canonical LaTeX at build time. Visually verify subscripts, superscripts, accents, bold and vector symbols, delimiters, relation and operator symbols, matrices, aligned rows, line breaks, and equation numbers against the source.
+2. Prefer a local build-time converter that emits semantic MathML. Embed the generated MathML directly in the document so the formula is selectable, accessible, and independent of JavaScript or network access at reading time.
+3. When MathML cannot faithfully express a complex macro, alignment, or notation, render the verified LaTeX locally to SVG and inline the SVG in the HTML. Preserve a meaningful accessible label and a copyable LaTeX representation in metadata, a MathML annotation, or collapsed supporting detail.
+4. If neither transcription nor vector rendering can be verified, use a tightly cropped, high-resolution image containing only the equation and its identifier. Add alternative text and explain that the crop is a transcription fallback. Never widen the crop to include ordinary prose or a substantial page region.
+
+Local tools such as a LaTeX engine, Pandoc, a LaTeX-to-MathML converter, or a TeX-to-SVG renderer may be used during generation. They are build tools, not reader dependencies: do not load MathJax, KaTeX, fonts, CSS, or scripts from a CDN, and do not require those tools to be installed on the reader's machine. If a renderer emits supporting CSS or fonts, inline them only when necessary and verify that the final file remains fully offline.
+
+Do not place raw LaTeX such as `u_t^A`, extraction artifacts such as `_` and `^`, or flattened ASCII approximations in the normal reading view. Simple inline symbols may use Unicode only when meaning, placement, and accessibility are unambiguous. Keep genuine program code in `<pre><code>`; render mathematical assignment lines, recurrences, and formal pseudocode notation as structured math or verified SVG rather than disguising them as code.
 
 ## Responsive HTML layout
 
@@ -77,6 +92,16 @@ Do not place a full PDF page, half-page column screenshot, or ordinary-paragraph
 - Add only interactions that materially help reading, such as collapsible supporting detail or a persistent section navigator. The core content and navigation must remain usable when JavaScript is disabled.
 - Include `<meta charset="utf-8">`, a responsive viewport declaration, the correct document language, a meaningful title, alternative text for informative images, visible focus states, and ordered heading levels.
 - A print stylesheet is optional. Do not treat printed pagination as a completion requirement unless the user explicitly requests print output.
+
+## Evidence image enlargement
+
+Make informative figure, table, and fallback-equation images readable without leaving the single HTML file.
+
+- Preserve enough source resolution for labels and fine details to remain legible when enlarged. Display a responsive preview without downsampling the embedded source solely to match its initial on-page size.
+- Double-clicking the preview must open a full-viewport lightbox or native dialog containing the same embedded image at a larger scale. Use `object-fit: contain` for fit-to-view and allow scrolling or a 1:1 view when the image exceeds the viewport.
+- Provide an accessible alternative to double-click, such as a visible enlarge button and keyboard activation with Enter or Space. Give the dialog an accessible name, retain the figure caption or identifier, show a visible close control, support Escape, and return focus to the trigger after closing. Backdrop click may also close the viewer.
+- Keep the interaction code generator-owned, minimal, and inline. Bind behavior through local markup and event listeners; never copy active content from the paper or depend on an external lightbox library.
+- The figure and its caption must remain readable when JavaScript is disabled; enlargement is a progressive enhancement, not the only way to access the evidence.
 
 ## Generator and file contract
 
@@ -113,10 +138,12 @@ Complete the following checks and correct failures before delivery:
 4. Inspect resource-bearing markup and CSS. Reject external or relative rendering dependencies, including stylesheet links, script `src` attributes, non-data image `src` values, remote fonts, and external CSS `url(...)` resources. Reader-facing citation hyperlinks are allowed.
 5. Verify at a representative desktop width and at least one narrow mobile width. Check typography, bilingual stacking, figure scaling, intentional table or equation scrolling, and absence of unintended document-level horizontal overflow.
 6. Confirm that selected source passages and translations are searchable and selectable HTML text. Confirm that no full-page or ordinary-paragraph screenshots are used as reading content.
-7. Verify that embedded image crops correspond only to necessary figures, tables, or exceptional equations; exclude unrelated page text and margins and preserve readable resolution.
-8. Confirm that every included pass contains its goal, reading actions, observable completion criteria, achievement check, unresolved questions, and gate.
-9. Confirm that no unintended numbered-extract headings remain and that evidence categories remain distinguishable without relying on color alone.
-10. Audit central values, units, metric meaning, and source anchors against the paper. Give extra attention to headline conclusions and the claim-evidence map.
-11. Inspect the browser console when scripts are present and correct errors. Re-run the affected checks after every change.
+7. Compare every displayed formula with the visible source. Confirm symbol identity, structure, alignment, numbering, and text alternatives; reject visible raw TeX, extraction markers, and unverified ASCII substitutions.
+8. Verify that embedded image crops correspond only to necessary figures, tables, or exceptional equations; exclude unrelated page text and margins and preserve readable enlargement resolution.
+9. Exercise enlargement for each image class: double-click, keyboard or button activation, visible close control, Escape, focus restoration, and any supported backdrop close. Check fit, 1:1 or overflow behavior on both viewports.
+10. Confirm that every included pass contains its goal, reading actions, observable completion criteria, achievement check, unresolved questions, and gate.
+11. Confirm that no unintended numbered-extract headings remain and that evidence categories remain distinguishable without relying on color alone.
+12. Audit central values, units, metric meaning, and source anchors against the paper. Give extra attention to headline conclusions and the claim-evidence map.
+13. Inspect the browser console when scripts are present and correct errors. Re-run the affected checks after every change.
 
 Return one clickable link to the self-contained HTML file and briefly state the mode, responsive viewports checked, offline verification outcome, and confirmation that no companion assets are required.

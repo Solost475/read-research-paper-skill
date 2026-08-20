@@ -1,6 +1,6 @@
 ---
 name: read-research-paper
-description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a responsive, self-contained single-file HTML reading edition that re-typesets selected source paragraphs with translation, embeds original figure and table crops, and never substitutes full-page screenshots for reading content. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
+description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a responsive, self-contained single-file HTML reading edition that re-typesets selected source paragraphs with translation, renders verified formulas offline, embeds original figure and table crops with enlargement controls, and never substitutes full-page screenshots for reading content. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
 ---
 
 # Read Research Paper
@@ -32,6 +32,8 @@ For the default HTML workflow, read [references/goal-driven-html-edition.md](ref
 - When a passage is labeled as source text, preserve its wording. Keep source text, translation, and reader commentary visually and semantically distinct.
 - In a re-typeset edition, transcribe selected prose into selectable text and place its translation beside or immediately after it. Source-page images and paragraph screenshots are inspection inputs, not substitutes for re-entered prose in the final HTML.
 - Keep figures and tables as faithful crops from the source PDF. Do not redraw, restyle, or retype their visual data unless the user explicitly asks for that transformation.
+- Reconstruct displayed mathematics from the visible source, verify every symbol, and render it offline as semantic MathML or self-contained inline SVG. Do not expose raw LaTeX or flattened ASCII notation as the normal reading view; use a tight equation-only crop only when faithful transcription cannot be established.
+- Make evidence images usable at their native resolution: in the default HTML, figures, tables, and equation crops must support double-click enlargement plus an accessible keyboard or button alternative, without introducing external files or libraries.
 - Preserve exact numbers, units, dataset splits, metric direction, and uncertainty. Do not invent missing results, citations, implementation details, or reproducibility claims.
 - Never use `read-research-paper`, `three-pass`, `reconstruct`, `output`, or `index` as the standalone artifact basename. The filename must identify the paper unless the user explicitly chooses another name.
 - The default HTML deliverable must be exactly one portable file. Inline CSS and necessary JavaScript; embed figure, table, and exceptional-equation crops as data URLs. Do not create or reference a sibling assets directory unless the user explicitly requests a multi-file package.
@@ -94,7 +96,7 @@ Use this structure when the user asks for a staged reading report, annotated edi
 
 Keep this contract proportional to the requested depth. A short `scan` can use compact goal and gate callouts; do not inflate a simple relevance check into a designed reading edition.
 
-For HTML output, follow [references/goal-driven-html-edition.md](references/goal-driven-html-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The HTML is complete only after the single file opens successfully with network access disabled, selected prose is searchable and selectable, every visual is embedded, and desktop and narrow-screen browser checks pass.
+For HTML output, follow [references/goal-driven-html-edition.md](references/goal-driven-html-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The HTML is complete only after the single file opens successfully with network access disabled, selected prose is searchable and selectable, formulas render faithfully without visible source markup, every visual is embedded, enlargement controls work, and desktop and narrow-screen browser checks pass.
 
 ## Produce the report
 
@@ -128,6 +130,8 @@ Before delivery, verify that:
 - Every selected source passage, figure, table, equation, or code fragment has a clear role in reaching the current pass goal; the report does not present extracts merely because they were available.
 - Selected prose is typeset as extractable text with a separate translation; no full-page or paragraph screenshot replaces readable source text.
 - Images in the reading body are limited to necessary visual evidence such as faithful figure and table crops.
+- Displayed formulas match the source and use offline MathML or inline SVG rather than visible raw TeX or flattened ASCII; any equation crop is tightly scoped and justified as a last resort.
+- Every informative evidence image can be enlarged by double-click and by an accessible alternative, then closed by keyboard or a visible control without losing the reader's place.
 - Each included pass states its goal, reading actions, completion criteria, achieved understanding, unresolved questions, and gate when the deliverable is explicitly staged.
 - HTML artifacts have been opened in a browser and checked at desktop and narrow widths for overflow, clipping, readable typography, working navigation, resource loading, and clear stage transitions.
 - The delivered filename identifies the paper from verified metadata and does not use the skill name or a generic workflow label as its basename.

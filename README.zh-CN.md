@@ -15,6 +15,8 @@
 - 每个阅读阶段先说明目标、阅读动作和达成标准，再给出达成检查、未决问题和阶段门控。
 - 目标驱动阅读版只重新录入必要原文，并在相邻位置提供翻译；内容按语义标题组织，不使用编号式“摘录”。
 - 正文不使用整页或普通段落截图；原论文图表以紧边界、未改动的裁图保留。
+- 公式逐项对照可见原文，并离线渲染为语义 MathML 或自包含内联 SVG；只有无法可靠转录时才使用紧边界公式裁图。
+- 内嵌证据图支持双击放大，并同时提供键盘和可见按钮操作的无障碍灯箱。
 - 证据标签区分 `Author claim`、`Paper evidence`、`Reader inference` 和 `Not reported`。
 - 来源锚点保留 PDF 页码、章节、图、表和公式标识。
 - HTML 使用响应式排版、语义导航、宽屏双语双栏和窄屏单栏布局。
@@ -72,7 +74,7 @@ cp -R read-research-paper-skill/skills/read-research-paper ~/.codex/skills/
 使用 $read-research-paper 阅读这篇论文。
 ```
 
-未提供其他选项时，Skill 会完成三遍阅读并返回一个经过验证的响应式、自包含 HTML。中文请求阅读英文论文时，宽屏把必要英文原文与中文翻译并排放置，窄屏则上下排列。图表以原始裁图内嵌到 HTML，不使用整页截图，也不创建资源目录。可以显式要求 `scan`、`understand`、`survey`、PDF、Markdown、纯对话输出或不生成 HTML，以覆盖默认行为。
+未提供其他选项时，Skill 会完成三遍阅读并返回一个经过验证的响应式、自包含 HTML。中文请求阅读英文论文时，宽屏把必要英文原文与中文翻译并排放置，窄屏则上下排列。公式通过离线 MathML 或内联 SVG 正确显示，不直接暴露原始 TeX；图表以原始裁图内嵌并支持双击放大。不使用整页截图，也不创建资源目录。可以显式要求 `scan`、`understand`、`survey`、PDF、Markdown、纯对话输出或不生成 HTML，以覆盖默认行为。
 
 默认文件名来自论文元数据，例如 `large-scale-empirical-study-of-jit-quality-assurance_2013_kamei-etal_zh-en.html`，而不是 `read-research-paper.html` 或 `output.html`。
 
