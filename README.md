@@ -1,10 +1,10 @@
 # read-research-paper
 
+**English** | [简体中文](README.zh-CN.md)
+
 A reusable Codex skill for reading one research paper, or a small paper set, with an evidence-grounded three-pass workflow.
 
 It distills S. Keshav's *How to Read a Paper* into an operational workflow for rapid screening, evidence-linked understanding, reconstruction-level critique, and goal-driven reading editions. The skill adds explicit source anchors, semantic evidence reorganization, document-instruction isolation, and modern literature-search safeguards.
-
-中文简介：这是一个面向 Codex 的论文阅读 Skill。显式调用并提供论文后，默认自动完成三遍式深读、目标驱动的语义重排、双语 HTML 生成和浏览器验收；也支持快速筛选、纯文本报告和从种子论文扩展相关工作。
 
 ## Features
 
@@ -69,7 +69,7 @@ The skill becomes available to Codex on the next turn after installation.
 Explicit invocation:
 
 ```text
-使用 $read-research-paper 阅读这篇论文。
+Use $read-research-paper to read this paper.
 ```
 
 With no further options, this runs all three passes and returns one verified, self-contained HTML reading edition. For a Chinese-language request on an English paper, it re-typesets the necessary English paragraphs and places Chinese translations beside them on wide screens and below them on narrow screens. Figures and tables remain faithful source crops embedded inside the HTML; full-page screenshots and companion assets directories are not used. Ask for `scan`, `understand`, `survey`, PDF, Markdown, chat-only output, or no HTML to override the default depth or artifact.
@@ -79,15 +79,15 @@ The default filename is derived from paper metadata, for example `large-scale-em
 Deep reading:
 
 ```text
-使用 $read-research-paper 的 reconstruct 模式精读这篇论文。
-输出 5C、主张-证据映射、方法重构、关键假设、复现缺口和下一步。
+Use $read-research-paper in reconstruct mode to study this paper.
+Include the five Cs, claim-evidence map, method reconstruction, assumptions, reproducibility gaps, and next action.
 ```
 
 Goal-driven HTML reading edition:
 
 ```text
-使用 $read-research-paper 把这篇论文整理为三遍式 HTML 阅读版。
-重新录入必要原文并逐段翻译，将图表裁图内嵌进文件；检查桌面和窄屏布局后只返回一个 HTML。
+Use $read-research-paper to turn this paper into a three-pass HTML reading edition.
+Re-typeset the necessary source passages with translation, embed original figure and table crops, and return one self-contained HTML file after desktop and narrow-screen checks.
 ```
 
 Codex may also invoke the skill implicitly when a request matches its description. OpenAI's documentation describes a skill as a directory containing a required `SKILL.md` and optional resources, and documents `$skill-name` as the explicit invocation form in Codex CLI and the IDE extension: [Build skills](https://learn.chatgpt.com/docs/build-skills).
