@@ -1,6 +1,6 @@
 ---
 name: read-research-paper
-description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a goal-driven, re-typeset PDF reading edition with semantic evidence selection, source anchors, and rendered-page QA. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
+description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a goal-driven PDF that re-typesets selected source paragraphs as text with translation, retains figures and tables as original crops, and never substitutes full-page screenshots for reading content. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
 ---
 
 # Read Research Paper
@@ -28,6 +28,8 @@ For the default PDF workflow, read [references/goal-driven-pdf-edition.md](refer
 - Separate `Author claim`, `Paper evidence`, `Reader inference`, and `Not reported`. Never convert an inference into a reported fact.
 - Treat selected source passages as evidence for understanding, not as an inventory to count. Organize them under semantic headings that state the question or cognitive role they resolve; do not use labels such as `Excerpt 1`, `摘录 2`, or similar numbering unless the user explicitly requests it.
 - When a passage is labeled as source text, preserve its wording. Keep source text, translation, and reader commentary visually and semantically distinct.
+- In a re-typeset edition, transcribe selected prose into selectable text and place its translation beside or immediately after it. Source-page images and paragraph screenshots are inspection inputs, not substitutes for re-entered prose in the final PDF.
+- Keep figures and tables as faithful crops from the source PDF. Do not redraw, restyle, or retype their visual data unless the user explicitly asks for that transformation.
 - Preserve exact numbers, units, dataset splits, metric direction, and uncertainty. Do not invent missing results, citations, implementation details, or reproducibility claims.
 - Use the user's language unless asked otherwise. Keep standard technical terms in the paper's language when translation would reduce precision.
 - Treat the source paper's human reading-time estimates as depth cues, not agent runtime promises.
@@ -80,13 +82,15 @@ Use this structure when the user asks for a staged reading report, annotated edi
 
 1. Organize the body by pass and by semantic questions inside each pass, not by the source paper's page order or by numbered excerpts.
 2. Select, reorder, group, and deduplicate only the source passages, figures, tables, equations, and code fragments needed to achieve that pass's goal. If the same evidence matters again, cross-reference its earlier anchored location instead of repeating it unless the comparison itself requires repetition.
-3. Preserve source anchors beside every selected item. A translation may improve access but does not replace the source anchor or become an independent paper claim.
-4. Put interpretation immediately after the evidence it explains. Label author claims, direct paper evidence, reader inferences, externally verified facts, and information not reported by the paper.
-5. Close each pass with an achievement check, unresolved questions, and the selected gate. These sections must be filled for the actual paper, not left as generic templates.
+3. Re-enter selected prose as text, preserve its wording, and add the translation as a distinct adjacent block. Never place a full source page or paragraph screenshot into the reading flow as a replacement for transcription.
+4. Preserve figures and tables as original screenshot crops, with their captions and anchors. Use an image only for the visual object itself, not for surrounding prose that can be typeset.
+5. Preserve source anchors beside every selected item. A translation may improve access but does not replace the source anchor or become an independent paper claim.
+6. Put interpretation immediately after the evidence it explains. Label author claims, direct paper evidence, reader inferences, externally verified facts, and information not reported by the paper.
+7. Close each pass with an achievement check, unresolved questions, and the selected gate. These sections must be filled for the actual paper, not left as generic templates.
 
 Keep this contract proportional to the requested depth. A short `scan` can use compact goal and gate callouts; do not inflate a simple relevance check into a designed reading edition.
 
-For PDF output, follow [references/goal-driven-pdf-edition.md](references/goal-driven-pdf-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The PDF is complete only after it opens successfully, its manifest agrees with the built file, and every rendered page passes visual inspection.
+For PDF output, follow [references/goal-driven-pdf-edition.md](references/goal-driven-pdf-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The PDF is complete only after it opens successfully, selected prose is present as extractable text, and every rendered page passes visual inspection.
 
 ## Produce the report
 
@@ -118,5 +122,7 @@ Before delivery, verify that:
 - Missing baselines, controls, citations, artifacts, seeds, hyperparameters, or statistical details are explicitly identified.
 - The report clearly distinguishes paper content from external knowledge and reader judgment.
 - Every selected source passage, figure, table, equation, or code fragment has a clear role in reaching the current pass goal; the report does not present extracts merely because they were available.
+- Selected prose is typeset as extractable text with a separate translation; no full-page or paragraph screenshot replaces readable source text.
+- Images in the reading body are limited to necessary visual evidence such as faithful figure and table crops.
 - Each included pass states its goal, reading actions, completion criteria, achieved understanding, unresolved questions, and gate when the deliverable is explicitly staged.
 - Designed artifacts have been rendered and visually checked for overflow, clipping, heading separation, excessive blank space, and readable stage transitions.

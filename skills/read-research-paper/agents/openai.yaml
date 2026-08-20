@@ -1,4 +1,4 @@
 interface:
   display_name: "三遍式论文阅读与 PDF 重排"
-  short_description: "自动完成三遍阅读、语义重排与双语 PDF 阅读版生成"
-  default_prompt: "使用 $read-research-paper 自动完成这篇论文的三遍阅读，按目标和证据重排为双语 PDF 阅读版，逐页校验后返回文件。"
+  short_description: "重录关键原文并翻译，保留原始图表，生成三遍式 PDF"
+  default_prompt: "使用 $read-research-paper 自动完成三遍阅读：重录必要原文段落并逐段翻译，只对图表使用原样裁图，不放入整页截图，最后返回校验后的 PDF。"

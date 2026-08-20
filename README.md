@@ -13,12 +13,13 @@ It distills S. Keshav's *How to Read a Paper* into an operational workflow for r
 - Pass 2 traces claims to figures, tables, equations, experiments, proofs, and citations.
 - Pass 3 virtually reconstructs assumptions, data flow, objectives, algorithms, evaluation, and missing reproducibility details.
 - Each included pass opens with its goal, reading actions, and completion criteria, then closes with an achievement check, unresolved questions, and a gate.
-- Goal-driven reading editions organize selected evidence under semantic headings instead of numbered excerpts, while keeping source text, translation, and reader commentary distinct.
+- Goal-driven reading editions re-typeset only the necessary source passages as selectable text with adjacent translation, organized under semantic headings instead of numbered excerpts.
+- Full source-page and paragraph screenshots are excluded from the reading body; original figures and tables are retained as tight, unmodified crops.
 - Evidence labels distinguish `Author claim`, `Paper evidence`, `Reader inference`, and `Not reported`.
 - Source anchors use PDF pages, sections, figures, tables, and equations.
 - Designed reading artifacts are rendered for page-by-page checks of overflow, clipping, orphaned headings, blank pages, and stage boundaries.
 - Explicit `$read-research-paper` invocation defaults to a complete three-pass PDF reading edition; depth and output format remain user-overridable.
-- PDF editions include a provenance manifest and preserve prior editions instead of overwriting them.
+- PDF editions preserve prior editions instead of overwriting them and maintain an existing manifest only when the generator already uses one.
 - Instructions embedded in papers are treated as untrusted document content, never as agent instructions.
 - The original PDF is not redistributed.
 
@@ -69,7 +70,7 @@ Explicit invocation:
 使用 $read-research-paper 阅读这篇论文。
 ```
 
-With no further options, this runs all three passes and returns a verified, goal-driven PDF reading edition. For a Chinese-language request on an English paper, the default edition keeps the original evidence and Chinese translation together. Ask for `scan`, `understand`, `survey`, Markdown, chat-only output, or no PDF to override the default depth or artifact.
+With no further options, this runs all three passes and returns a verified, goal-driven PDF reading edition. For a Chinese-language request on an English paper, it re-typesets the necessary English paragraphs as text and places Chinese translations beside them. Figures and tables remain faithful source crops; full-page screenshots are not used as reading content. Ask for `scan`, `understand`, `survey`, Markdown, chat-only output, or no PDF to override the default depth or artifact.
 
 Deep reading:
 
@@ -82,7 +83,7 @@ Goal-driven reading edition:
 
 ```text
 使用 $read-research-paper 把这篇论文整理为三遍式 PDF 阅读版。
-保留现有版式风格，不覆盖旧版；完成逐页渲染检查后返回文件。
+将需要阅读的原文段落重新录入并逐段翻译；图表保留原样裁图，不使用整页截图。
 ```
 
 Codex may also invoke the skill implicitly when a request matches its description. OpenAI's documentation describes a skill as a directory containing a required `SKILL.md` and optional resources, and documents `$skill-name` as the explicit invocation form in Codex CLI and the IDE extension: [Build skills](https://learn.chatgpt.com/docs/build-skills).
