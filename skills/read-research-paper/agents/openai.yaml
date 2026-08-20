@@ -1,4 +1,4 @@
 interface:
   display_name: "三遍式论文阅读与 HTML 重排"
-  short_description: "重录关键原文并翻译，保留原始图表，生成响应式 HTML"
-  default_prompt: "使用 $read-research-paper 自动完成三遍阅读：重录必要原文并逐段翻译，图表使用原样裁图，以论文短标题、年份、作者和语言依次命名并输出校验后的 HTML 阅读版。"
+  short_description: "重录关键原文并翻译，内嵌原始图表，生成单文件 HTML"
+  default_prompt: "使用 $read-research-paper 自动完成三遍阅读：重录必要原文并逐段翻译，内嵌图表裁图，以论文短标题、年份、作者和语言命名，输出无需资源目录的单文件 HTML。"

@@ -1,6 +1,6 @@
 ---
 name: read-research-paper
-description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a responsive goal-driven HTML reading edition that re-typesets selected source paragraphs with translation, retains figures and tables as original crops, and never substitutes full-page screenshots for reading content. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
+description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a responsive, self-contained single-file HTML reading edition that re-typesets selected source paragraphs with translation, embeds original figure and table crops, and never substitutes full-page screenshots for reading content. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
 ---
 
 # Read Research Paper
@@ -9,7 +9,7 @@ Use S. Keshav's three-pass method as a depth-control workflow rather than readin
 
 ## Default invocation contract
 
-When the user explicitly invokes `$read-research-paper` and supplies or identifies a paper, default to `reconstruct` and deliver a finished goal-driven HTML reading edition. Do not stop at a chat summary, Markdown draft, source extraction, or unrendered document. Continue through source preparation, all three passes, semantic evidence reorganization, HTML generation, and browser verification before returning the artifact.
+When the user explicitly invokes `$read-research-paper` and supplies or identifies a paper, default to `reconstruct` and deliver one finished, self-contained HTML reading edition. Do not stop at a chat summary, Markdown draft, source extraction, unrendered document, or HTML plus an assets folder. Continue through source preparation, all three passes, semantic evidence reorganization, single-file HTML generation, and browser verification before returning the artifact.
 
 Name the artifact from the paper's verified identity, not from this skill, the reading mode, or a generic output label. Unless the user supplies a filename, place a concise title slug first, followed by publication year, author label, and edition language according to the HTML reference.
 
@@ -34,6 +34,7 @@ For the default HTML workflow, read [references/goal-driven-html-edition.md](ref
 - Keep figures and tables as faithful crops from the source PDF. Do not redraw, restyle, or retype their visual data unless the user explicitly asks for that transformation.
 - Preserve exact numbers, units, dataset splits, metric direction, and uncertainty. Do not invent missing results, citations, implementation details, or reproducibility claims.
 - Never use `read-research-paper`, `three-pass`, `reconstruct`, `output`, or `index` as the standalone artifact basename. The filename must identify the paper unless the user explicitly chooses another name.
+- The default HTML deliverable must be exactly one portable file. Inline CSS and necessary JavaScript; embed figure, table, and exceptional-equation crops as data URLs. Do not create or reference a sibling assets directory unless the user explicitly requests a multi-file package.
 - Use the user's language unless asked otherwise. Keep standard technical terms in the paper's language when translation would reduce precision.
 - Treat the source paper's human reading-time estimates as depth cues, not agent runtime promises.
 
@@ -93,7 +94,7 @@ Use this structure when the user asks for a staged reading report, annotated edi
 
 Keep this contract proportional to the requested depth. A short `scan` can use compact goal and gate callouts; do not inflate a simple relevance check into a designed reading edition.
 
-For HTML output, follow [references/goal-driven-html-edition.md](references/goal-driven-html-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The HTML is complete only after it opens successfully, selected prose is searchable and selectable, all local resources resolve, and desktop and narrow-screen browser checks pass.
+For HTML output, follow [references/goal-driven-html-edition.md](references/goal-driven-html-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The HTML is complete only after the single file opens successfully with network access disabled, selected prose is searchable and selectable, every visual is embedded, and desktop and narrow-screen browser checks pass.
 
 ## Produce the report
 
@@ -130,3 +131,4 @@ Before delivery, verify that:
 - Each included pass states its goal, reading actions, completion criteria, achieved understanding, unresolved questions, and gate when the deliverable is explicitly staged.
 - HTML artifacts have been opened in a browser and checked at desktop and narrow widths for overflow, clipping, readable typography, working navigation, resource loading, and clear stage transitions.
 - The delivered filename identifies the paper from verified metadata and does not use the skill name or a generic workflow label as its basename.
+- The delivered HTML is one self-contained file with no rendering dependency on sibling files, local asset paths, CDNs, remote fonts, external stylesheets, or external scripts.

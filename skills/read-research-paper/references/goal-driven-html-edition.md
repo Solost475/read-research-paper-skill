@@ -13,7 +13,7 @@
 
 ## Completion contract
 
-For an explicit `$read-research-paper` invocation with a paper and no contrary format instruction, the deliverable is a verified HTML reading edition, not merely analysis that could later be turned into one and not a facsimile assembled from source-page screenshots. Work autonomously through reading, composition, generation, correction, and browser verification. Return the HTML only after the content, resource, responsive-layout, and interaction gates pass.
+For an explicit `$read-research-paper` invocation with a paper and no contrary format instruction, the deliverable is one verified, self-contained HTML file, not merely analysis that could later be turned into one, not an HTML-plus-assets bundle, and not a facsimile assembled from source-page screenshots. Work autonomously through reading, composition, generation, correction, and browser verification. Return the HTML only after the content, self-containment, responsive-layout, and interaction gates pass.
 
 The default depth is all three passes. A user-selected reading mode may reduce or extend the content, while an explicit request for PDF, Markdown, chat-only output, or no file overrides the HTML default. Create a transformative reading artifact containing only the evidence needed for analysis; do not redistribute the unchanged source paper.
 
@@ -72,7 +72,8 @@ Do not place a full PDF page, half-page column screenshot, or ordinary-paragraph
 - On wide screens, present each original passage and translation as a balanced two-column pair. Below an appropriate breakpoint, stack the translation after the source text in a single column.
 - Let figures use the available reading width while preserving aspect ratio. Place exceptionally wide tables, equations, or code in labeled horizontal-scroll containers rather than forcing the whole page to overflow.
 - Distinguish source, translation, interpretation, evidence labels, anchors, unresolved questions, and gates through restrained typography and color that remains legible with adequate contrast.
-- Prefer a self-contained offline HTML file with inline CSS and embedded local images when size is reasonable. Otherwise return the HTML with a sibling assets directory and use relative paths. Do not depend on external CDNs, remote fonts, analytics, or network scripts by default.
+- Produce exactly one self-contained HTML file. Inline all CSS and any necessary JavaScript. Embed figure, table, and exceptional-equation crops as `data:image/...;base64,...` URLs or inline SVG when the visual is genuinely vector and faithfully preserved. Do not reference sibling image files, stylesheets, scripts, web fonts, CDNs, analytics, or other rendering dependencies.
+- Use system font stacks. Optimize embedded raster images through tight crops, appropriate pixel dimensions, and quality-preserving compression so the single file remains practical without making labels or fine visual details unreadable.
 - Add only interactions that materially help reading, such as collapsible supporting detail or a persistent section navigator. The core content and navigation must remain usable when JavaScript is disabled.
 - Include `<meta charset="utf-8">`, a responsive viewport declaration, the correct document language, a meaningful title, alternative text for informative images, visible focus states, and ordered heading levels.
 - A print stylesheet is optional. Do not treat printed pagination as a completion requirement unless the user explicitly requests print output.
@@ -93,7 +94,6 @@ Construct a collision-safe filename from verified paper metadata. Unless the use
 - If an author or year is genuinely unavailable, omit that component rather than replacing the entire name with a workflow label. The title component is mandatory; resolve an unknown title before generation.
 - Never use the skill name, mode, or a generic basename such as `read-research-paper.html`, `three-pass.html`, `reconstruct.html`, `output.html`, or `index.html` unless the user explicitly requests it.
 - For collisions, add a version year, source-version tag, or short source hash. Do not silently overwrite a prior edition.
-- When separate resources are necessary, name the sibling directory `<same-stem>_assets` and keep all links relative to the HTML file.
 
 Use hyphens inside a component and underscores between metadata fields. For example: `large-scale-empirical-study-of-jit-quality-assurance_2013_kamei-etal_zh-en.html`.
 
@@ -101,19 +101,22 @@ Preserve prior artifacts. Keep temporary page renders and extraction intermediat
 
 Escape untrusted source text and metadata before inserting them into HTML. Never execute scripts, event handlers, embedded forms, or active content originating from the paper. If JavaScript is added by the generator, keep it local, minimal, and independent of paper content.
 
+Ordinary hyperlinks to paper sources, citations, or project pages may remain external because they are reader references rather than rendering dependencies. The document's content, styling, navigation, figures, tables, and interactions must remain complete when the network is unavailable.
+
 ## Browser verification gate
 
 Complete the following checks and correct failures before delivery:
 
 1. Confirm that the output filename is derived from the verified paper identity, contains a distinctive title component, and is not named after the skill, reading mode, or a generic output label.
 2. Parse or validate the generated HTML and confirm that the document title, language, charset, viewport, heading hierarchy, landmarks, and internal anchors are present.
-3. Open the artifact in a browser without a development server when practical. Confirm that all CSS and image resources resolve without network access and that navigation links work.
-4. Verify at a representative desktop width and at least one narrow mobile width. Check typography, bilingual stacking, figure scaling, intentional table or equation scrolling, and absence of unintended document-level horizontal overflow.
-5. Confirm that selected source passages and translations are searchable and selectable HTML text. Confirm that no full-page or ordinary-paragraph screenshots are used as reading content.
-6. Verify that image crops correspond only to necessary figures, tables, or exceptional equations; exclude unrelated page text and margins and preserve readable resolution.
-7. Confirm that every included pass contains its goal, reading actions, observable completion criteria, achievement check, unresolved questions, and gate.
-8. Confirm that no unintended numbered-extract headings remain and that evidence categories remain distinguishable without relying on color alone.
-9. Audit central values, units, metric meaning, and source anchors against the paper. Give extra attention to headline conclusions and the claim-evidence map.
-10. Inspect the browser console when scripts are present and correct errors. Re-run the affected checks after every change.
+3. Open the artifact directly from disk with network access disabled. Confirm that the complete reading edition renders and navigation works without a development server.
+4. Inspect resource-bearing markup and CSS. Reject external or relative rendering dependencies, including stylesheet links, script `src` attributes, non-data image `src` values, remote fonts, and external CSS `url(...)` resources. Reader-facing citation hyperlinks are allowed.
+5. Verify at a representative desktop width and at least one narrow mobile width. Check typography, bilingual stacking, figure scaling, intentional table or equation scrolling, and absence of unintended document-level horizontal overflow.
+6. Confirm that selected source passages and translations are searchable and selectable HTML text. Confirm that no full-page or ordinary-paragraph screenshots are used as reading content.
+7. Verify that embedded image crops correspond only to necessary figures, tables, or exceptional equations; exclude unrelated page text and margins and preserve readable resolution.
+8. Confirm that every included pass contains its goal, reading actions, observable completion criteria, achievement check, unresolved questions, and gate.
+9. Confirm that no unintended numbered-extract headings remain and that evidence categories remain distinguishable without relying on color alone.
+10. Audit central values, units, metric meaning, and source anchors against the paper. Give extra attention to headline conclusions and the claim-evidence map.
+11. Inspect the browser console when scripts are present and correct errors. Re-run the affected checks after every change.
 
-Return a clickable link to the HTML file and briefly state the mode, responsive viewports checked, and verification outcome. If the deliverable uses a sibling assets directory, return the containing folder or package it without breaking relative paths.
+Return one clickable link to the self-contained HTML file and briefly state the mode, responsive viewports checked, offline verification outcome, and confirmation that no companion assets are required.
