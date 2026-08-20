@@ -4,7 +4,7 @@ A reusable Codex skill for reading one research paper, or a small paper set, wit
 
 It distills S. Keshav's *How to Read a Paper* into an operational workflow for rapid screening, evidence-linked understanding, reconstruction-level critique, and goal-driven reading editions. The skill adds explicit source anchors, semantic evidence reorganization, document-instruction isolation, and modern literature-search safeguards.
 
-中文简介：这是一个面向 Codex 的论文阅读 Skill，支持快速筛选、证据级理解、复现式深读、目标驱动的论文语义重排，以及从种子论文扩展相关工作的流程。
+中文简介：这是一个面向 Codex 的论文阅读 Skill。显式调用并提供论文后，默认自动完成三遍式深读、目标驱动的语义重排、双语 PDF 生成和逐页验收；也支持快速筛选、纯文本报告和从种子论文扩展相关工作。
 
 ## Features
 
@@ -17,6 +17,8 @@ It distills S. Keshav's *How to Read a Paper* into an operational workflow for r
 - Evidence labels distinguish `Author claim`, `Paper evidence`, `Reader inference`, and `Not reported`.
 - Source anchors use PDF pages, sections, figures, tables, and equations.
 - Designed reading artifacts are rendered for page-by-page checks of overflow, clipping, orphaned headings, blank pages, and stage boundaries.
+- Explicit `$read-research-paper` invocation defaults to a complete three-pass PDF reading edition; depth and output format remain user-overridable.
+- PDF editions include a provenance manifest and preserve prior editions instead of overwriting them.
 - Instructions embedded in papers are treated as untrusted document content, never as agent instructions.
 - The original PDF is not redistributed.
 
@@ -64,9 +66,10 @@ The skill becomes available to Codex on the next turn after installation.
 Explicit invocation:
 
 ```text
-Use $read-research-paper in understand mode to read this PDF.
-Produce the five Cs, a claim-evidence map, limitations, and source anchors.
+使用 $read-research-paper 阅读这篇论文。
 ```
+
+With no further options, this runs all three passes and returns a verified, goal-driven PDF reading edition. For a Chinese-language request on an English paper, the default edition keeps the original evidence and Chinese translation together. Ask for `scan`, `understand`, `survey`, Markdown, chat-only output, or no PDF to override the default depth or artifact.
 
 Deep reading:
 
@@ -78,8 +81,8 @@ Deep reading:
 Goal-driven reading edition:
 
 ```text
-使用 $read-research-paper 把这篇论文整理为三遍式阅读版。
-每遍说明目标、阅读动作和达成标准，按语义重排必要原文证据，并给出达成检查、未决问题与门控。
+使用 $read-research-paper 把这篇论文整理为三遍式 PDF 阅读版。
+保留现有版式风格，不覆盖旧版；完成逐页渲染检查后返回文件。
 ```
 
 Codex may also invoke the skill implicitly when a request matches its description. OpenAI's documentation describes a skill as a directory containing a required `SKILL.md` and optional resources, and documents `$skill-name` as the explicit invocation form in Codex CLI and the IDE extension: [Build skills](https://learn.chatgpt.com/docs/build-skills).
@@ -93,6 +96,7 @@ skills/
     ├── agents/
     │   └── openai.yaml
     └── references/
+        ├── goal-driven-pdf-edition.md
         └── three-pass-protocol.md
 ```
 

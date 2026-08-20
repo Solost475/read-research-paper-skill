@@ -1,11 +1,24 @@
 ---
 name: read-research-paper
-description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique; produce goal-driven stage reports or reading editions with semantic source selection and page, section, figure, table, or equation anchors, with an optional seed-paper-centered literature-survey expansion. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
+description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a goal-driven, re-typeset PDF reading edition with semantic evidence selection, source anchors, and rendered-page QA. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
 ---
 
 # Read Research Paper
 
 Use S. Keshav's three-pass method as a depth-control workflow rather than reading linearly from page one. Read [references/three-pass-protocol.md](references/three-pass-protocol.md) completely before analyzing a paper.
+
+## Default invocation contract
+
+When the user explicitly invokes `$read-research-paper` and supplies or identifies a paper, default to `reconstruct` and deliver a finished goal-driven PDF reading edition. Do not stop at a chat summary, Markdown draft, source extraction, or unrendered document. Continue through source preparation, all three passes, semantic evidence reorganization, PDF generation, and page-by-page verification before returning the artifact.
+
+Honor explicit overrides:
+
+- A requested `scan`, `understand`, or `survey` mode changes reading depth but still produces a PDF unless the user requests text-only output or says not to create a file.
+- A request for notes, Markdown, chat-only analysis, or no PDF changes the deliverable accordingly.
+- An implicit invocation without a requested format defaults to the proportional text report described below; do not create a large artifact merely because a general paper question matched the skill.
+- If the paper source is missing or ambiguous, obtain or request it before generation. Do not ask between passes unless a missing source or critical ambiguity prevents sound progress.
+
+For the default PDF workflow, read [references/goal-driven-pdf-edition.md](references/goal-driven-pdf-edition.md) completely before building the artifact.
 
 ## Core rules
 
@@ -30,7 +43,7 @@ Infer the mode from the request; ask only when the choice materially changes the
 | `reconstruct` | Deep critique, implementation planning, reproduction, formal review preparation | Passes 1-3 |
 | `survey` | Expand from a seed paper into a related-work set | Survey extension, then Pass 1 on seeds and Pass 2 on selected papers |
 
-Default an unspecified request to `understand`. If the user explicitly asks for the three-pass method, use `reconstruct`.
+Default an implicit or ordinary unspecified request to `understand`. For explicit `$read-research-paper` invocation, follow the default invocation contract above. If the user explicitly asks for the three-pass method, use `reconstruct`.
 
 ## Prepare the source
 
@@ -73,7 +86,7 @@ Use this structure when the user asks for a staged reading report, annotated edi
 
 Keep this contract proportional to the requested depth. A short `scan` can use compact goal and gate callouts; do not inflate a simple relevance check into a designed reading edition.
 
-If the user requests a PDF or another designed reading artifact, preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and render the finished artifact for page-by-page QA. Check text overflow, clipped visuals, orphaned semantic headings, abnormal blank pages, and stage-boundary pagination.
+For PDF output, follow [references/goal-driven-pdf-edition.md](references/goal-driven-pdf-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The PDF is complete only after it opens successfully, its manifest agrees with the built file, and every rendered page passes visual inspection.
 
 ## Produce the report
 
