@@ -15,7 +15,7 @@
 
 ## Completion contract
 
-For an explicit `$read-research-paper` invocation with a paper and no contrary format instruction, the deliverable is one verified, self-contained HTML file, not merely analysis that could later be turned into one, not an HTML-plus-assets bundle, and not a facsimile assembled from source-page screenshots. Work autonomously through reading, composition, generation, correction, and browser verification. Return the HTML only after the content, self-containment, responsive-layout, and interaction gates pass.
+When the user explicitly activates the skill with a paper and gives no contrary format instruction, the deliverable is one verified, self-contained HTML file, not merely analysis that could later be turned into one, not an HTML-plus-assets bundle, and not a facsimile assembled from source-page screenshots. Work autonomously through reading, composition, generation, correction, and browser verification. Return the HTML only after the content, self-containment, responsive-layout, and interaction gates pass.
 
 The default depth is all three passes. A user-selected reading mode may reduce or extend the content, while an explicit request for PDF, Markdown, chat-only output, or no file overrides the HTML default. Create a transformative reading artifact containing only the evidence needed for analysis; do not redistribute the unchanged source paper.
 

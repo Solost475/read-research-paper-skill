@@ -1,15 +1,22 @@
 ---
 name: read-research-paper
 description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a responsive, self-contained single-file HTML reading edition that re-typesets selected source paragraphs with translation, renders verified formulas offline, embeds original figure and table crops with enlargement controls, and never substitutes full-page screenshots for reading content. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
+license: MIT
 ---
 
 # Read Research Paper
 
 Use S. Keshav's three-pass method as a depth-control workflow rather than reading linearly from page one. Read [references/three-pass-protocol.md](references/three-pass-protocol.md) completely before analyzing a paper.
 
-## Default invocation contract
+## Host portability
 
-When the user explicitly invokes `$read-research-paper` and supplies or identifies a paper, default to `reconstruct` and deliver one finished, self-contained HTML reading edition. Do not stop at a chat summary, Markdown draft, source extraction, unrendered document, or HTML plus an assets folder. Continue through source preparation, all three passes, semantic evidence reorganization, single-file HTML generation, and browser verification before returning the artifact.
+This is a platform-neutral Agent Skill. Treat this `SKILL.md` and its relative `references/` links as the normative workflow. Do not assume a particular command prefix, product directory, model provider, tool name, browser driver, PDF library, or shell. Use equivalent capabilities exposed by the host.
+
+Host-specific metadata or adapters may coexist in the package, but they do not redefine the workflow and may be ignored by hosts that do not recognize them. If a required capability has no equivalent in the current host, identify the exact missing capability and do not claim that the affected extraction, generation, or verification step was completed.
+
+## Default activation contract
+
+When the user explicitly activates this skill and supplies or identifies a paper, default to `reconstruct` and deliver one finished, self-contained HTML reading edition. Explicit activation means any host-supported selection, mention, command, or direct loading of this skill; it does not require a particular syntax. Do not stop at a chat summary, Markdown draft, source extraction, unrendered document, or HTML plus an assets folder. Continue through source preparation, all three passes, semantic evidence reorganization, single-file HTML generation, and browser verification before returning the artifact.
 
 Name the artifact from the paper's verified identity, not from this skill, the reading mode, or a generic output label. Unless the user supplies a filename, place a concise title slug first, followed by publication year, author label, and edition language according to the HTML reference.
 
@@ -17,7 +24,7 @@ Honor explicit overrides:
 
 - A requested `scan`, `understand`, or `survey` mode changes reading depth but still produces HTML unless the user requests another format, text-only output, or no file.
 - A request for PDF, Markdown, chat-only analysis, or no HTML changes the deliverable accordingly.
-- An implicit invocation without a requested format defaults to the proportional text report described below; do not create a large artifact merely because a general paper question matched the skill.
+- Automatic activation without a requested format defaults to the proportional text report described below; do not create a large artifact merely because a general paper question matched the skill.
 - If the paper source is missing or ambiguous, obtain or request it before generation. Do not ask between passes unless a missing source or critical ambiguity prevents sound progress.
 
 For the default HTML workflow, read [references/goal-driven-html-edition.md](references/goal-driven-html-edition.md) completely before building the artifact.
@@ -51,7 +58,7 @@ Infer the mode from the request; ask only when the choice materially changes the
 | `reconstruct` | Deep critique, implementation planning, reproduction, formal review preparation | Passes 1-3 |
 | `survey` | Expand from a seed paper into a related-work set | Survey extension, then Pass 1 on seeds and Pass 2 on selected papers |
 
-Default an implicit or ordinary unspecified request to `understand`. For explicit `$read-research-paper` invocation, follow the default invocation contract above. If the user explicitly asks for the three-pass method, use `reconstruct`.
+Default an automatically activated or ordinary unspecified request to `understand`. When the user explicitly activates this skill, follow the default activation contract above. If the user explicitly asks for the three-pass method, use `reconstruct`.
 
 ## Prepare the source
 

@@ -2,7 +2,7 @@
 
 [English](README.md) | **简体中文**
 
-这是一个可复用的 Codex Skill，用证据驱动的三遍阅读流程处理一篇论文或一个小规模论文集合。
+这是一个可跨智能体平台使用的 Agent Skill，用证据驱动的三遍阅读流程处理一篇论文或一个小规模论文集合。
 
 它将 S. Keshav 的《How to Read a Paper》转化为可执行的工作流，覆盖快速筛选、证据关联理解、重建式批判和目标驱动阅读版。Skill 额外加入来源锚点、语义证据重组、文档指令隔离和现代文献检索偏差防护。
 
@@ -20,7 +20,7 @@
 - 证据标签区分 `Author claim`、`Paper evidence`、`Reader inference` 和 `Not reported`。
 - 来源锚点保留 PDF 页码、章节、图、表和公式标识。
 - HTML 使用响应式排版、语义导航、宽屏双语双栏和窄屏单栏布局。
-- 显式调用 `$read-research-paper` 时默认生成完整三遍式 HTML；用户仍可覆盖阅读深度或输出格式。
+- 显式激活 Skill 时默认生成完整三遍式 HTML；用户仍可覆盖阅读深度或输出格式。
 - HTML 会在桌面和窄屏视口检查溢出、资源缺失、导航错误和内容可读性。
 - 文件名依次使用论文短标题、年份、第一作者标识和语言，不使用 Skill 名或泛化流程名称。
 - 默认只交付一个自包含 HTML：CSS 和可选 JavaScript 内联，图表裁图以 data URL 嵌入，不需要资源目录。
@@ -36,42 +36,30 @@
 | `reconstruct` | 深度批判、实现规划和复现准备 | 第一至三遍 |
 | `survey` | 从至少一篇种子论文向外扩展 | 引文网络扩展及按需阅读 |
 
+## 可移植性
+
+核心包遵循 [Agent Skills 规范](https://agentskills.io/specification)：以包含标准 frontmatter 的 `SKILL.md` 为入口，通过相对链接读取参考文件。所有流程均按能力描述，不要求特定厂商命令、产品路径、模型提供商、Shell 或具名工具。
+
+`agents/openai.yaml` 只是供能够识别它的宿主使用的可选界面元数据，不属于行为规范。其他宿主可以忽略或移除它，不会改变 Skill 的工作方式。
+
+完整 HTML 工作流需要宿主具备等价能力：读取论文、写入本地文件、检查 PDF 页面或网页、裁剪图像、离线渲染公式以及在浏览器中验证结果。如果缺少某项能力，智能体必须明确说明限制，不能声称已经完成相应验证。
+
 ## 安装
 
-让 Codex 从本仓库安装：
-
-```text
-使用 $skill-installer 安装：
-https://github.com/Solost475/read-research-paper-skill/tree/main/skills/read-research-paper
-```
-
-也可以克隆仓库并把 `skills/read-research-paper` 复制到个人 Codex Skills 目录。
-
-PowerShell：
-
-```powershell
-git clone https://github.com/Solost475/read-research-paper-skill.git
-$skillsDirectory = Join-Path $env:USERPROFILE ".codex\skills"
-New-Item -ItemType Directory -Force -Path $skillsDirectory | Out-Null
-Copy-Item -Recurse -LiteralPath ".\read-research-paper-skill\skills\read-research-paper" -Destination $skillsDirectory
-```
-
-Bash：
+克隆仓库，然后把完整的 `skills/read-research-paper` 目录复制到智能体宿主所配置的 Skill 目录：
 
 ```bash
 git clone https://github.com/Solost475/read-research-paper-skill.git
-mkdir -p ~/.codex/skills
-cp -R read-research-paper-skill/skills/read-research-paper ~/.codex/skills/
 ```
 
-安装后，Skill 会在 Codex 的下一轮对话中可用。
+必须让 `SKILL.md` 与 `references/` 保持相对目录关系。复制后，按宿主的发现机制刷新或重启。如果宿主不支持目录式 Skill 发现，则把 `SKILL.md` 作为可复用指令入口加载，并确保智能体能够按相对路径读取其中链接的参考文件。
 
 ## 使用
 
-显式调用：
+平台无关的激活示例：
 
 ```text
-使用 $read-research-paper 阅读这篇论文。
+激活 read-research-paper Skill，并阅读这篇论文。
 ```
 
 未提供其他选项时，Skill 会完成三遍阅读并返回一个经过验证的响应式、自包含 HTML。中文请求阅读英文论文时，宽屏把必要英文原文与中文翻译并排放置，窄屏则上下排列。公式通过离线 MathML 或内联 SVG 正确显示，不直接暴露原始 TeX；图表以原始裁图内嵌并支持双击放大。不使用整页截图，也不创建资源目录。可以显式要求 `scan`、`understand`、`survey`、PDF、Markdown、纯对话输出或不生成 HTML，以覆盖默认行为。
@@ -81,18 +69,18 @@ cp -R read-research-paper-skill/skills/read-research-paper ~/.codex/skills/
 深度阅读：
 
 ```text
-使用 $read-research-paper 的 reconstruct 模式精读这篇论文。
+以 reconstruct 模式激活 read-research-paper，精读这篇论文。
 输出 Five Cs、主张—证据映射、方法重构、关键假设、复现缺口和下一步。
 ```
 
 目标驱动 HTML 阅读版：
 
 ```text
-使用 $read-research-paper 把这篇论文整理为三遍式 HTML 阅读版。
+激活 read-research-paper，把这篇论文整理为三遍式 HTML 阅读版。
 重新录入必要原文并逐段翻译，将图表裁图内嵌进文件；检查桌面和窄屏布局后只返回一个 HTML。
 ```
 
-当请求与描述匹配时，Codex 也可能隐式调用该 Skill。OpenAI 文档把 Skill 定义为包含必需 `SKILL.md` 和可选资源的目录，并说明 `$skill-name` 是 Codex CLI 和 IDE 扩展中的显式调用形式：[Build skills](https://learn.chatgpt.com/docs/build-skills)。
+宿主也可以在请求与描述匹配时自动激活该 Skill。选择语法和发现目录由宿主决定，不属于本 Skill 的行为契约。
 
 ## 仓库结构
 
@@ -101,7 +89,7 @@ skills/
 └── read-research-paper/
     ├── SKILL.md
     ├── agents/
-    │   └── openai.yaml
+    │   └── openai.yaml                # 可选宿主界面适配
     └── references/
         ├── goal-driven-html-edition.md
         └── three-pass-protocol.md
