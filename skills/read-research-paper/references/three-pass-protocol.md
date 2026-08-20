@@ -35,7 +35,7 @@ At the end of every included pass, record:
 2. **Unresolved questions** - what remains uncertain or not reported.
 3. **Gate** - `continue`, `stop-sufficient`, `stop-irrelevant`, `pause-for-background`, or the pass-specific low-quality outcome.
 
-For a designed reading artifact, preserve the requested visual language and original figures or tables unless editing is requested. Render the result and inspect every page for overflow, clipping, orphaned semantic headings, abnormal blank pages, and broken stage boundaries.
+For a designed reading artifact, preserve the requested visual language and original figures or tables unless editing is requested. Render it in the target medium. For HTML, inspect desktop and narrow viewports for overflow, clipping, broken navigation, unreadable typography, missing resources, and unclear stage boundaries.
 
 ## Pass 1 - obtain the bird's-eye view
 

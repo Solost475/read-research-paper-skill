@@ -4,7 +4,7 @@ A reusable Codex skill for reading one research paper, or a small paper set, wit
 
 It distills S. Keshav's *How to Read a Paper* into an operational workflow for rapid screening, evidence-linked understanding, reconstruction-level critique, and goal-driven reading editions. The skill adds explicit source anchors, semantic evidence reorganization, document-instruction isolation, and modern literature-search safeguards.
 
-中文简介：这是一个面向 Codex 的论文阅读 Skill。显式调用并提供论文后，默认自动完成三遍式深读、目标驱动的语义重排、双语 PDF 生成和逐页验收；也支持快速筛选、纯文本报告和从种子论文扩展相关工作。
+中文简介：这是一个面向 Codex 的论文阅读 Skill。显式调用并提供论文后，默认自动完成三遍式深读、目标驱动的语义重排、双语 HTML 生成和浏览器验收；也支持快速筛选、纯文本报告和从种子论文扩展相关工作。
 
 ## Features
 
@@ -17,9 +17,9 @@ It distills S. Keshav's *How to Read a Paper* into an operational workflow for r
 - Full source-page and paragraph screenshots are excluded from the reading body; original figures and tables are retained as tight, unmodified crops.
 - Evidence labels distinguish `Author claim`, `Paper evidence`, `Reader inference`, and `Not reported`.
 - Source anchors use PDF pages, sections, figures, tables, and equations.
-- Designed reading artifacts are rendered for page-by-page checks of overflow, clipping, orphaned headings, blank pages, and stage boundaries.
-- Explicit `$read-research-paper` invocation defaults to a complete three-pass PDF reading edition; depth and output format remain user-overridable.
-- PDF editions preserve prior editions instead of overwriting them and maintain an existing manifest only when the generator already uses one.
+- HTML reading artifacts use responsive typography, semantic navigation, wide-screen bilingual columns, and narrow-screen single-column flow.
+- Explicit `$read-research-paper` invocation defaults to a complete three-pass HTML reading edition; depth and output format remain user-overridable.
+- HTML editions are checked in desktop and narrow viewports for overflow, missing resources, broken navigation, and content readability.
 - Instructions embedded in papers are treated as untrusted document content, never as agent instructions.
 - The original PDF is not redistributed.
 
@@ -70,7 +70,7 @@ Explicit invocation:
 使用 $read-research-paper 阅读这篇论文。
 ```
 
-With no further options, this runs all three passes and returns a verified, goal-driven PDF reading edition. For a Chinese-language request on an English paper, it re-typesets the necessary English paragraphs as text and places Chinese translations beside them. Figures and tables remain faithful source crops; full-page screenshots are not used as reading content. Ask for `scan`, `understand`, `survey`, Markdown, chat-only output, or no PDF to override the default depth or artifact.
+With no further options, this runs all three passes and returns a verified, responsive HTML reading edition. For a Chinese-language request on an English paper, it re-typesets the necessary English paragraphs and places Chinese translations beside them on wide screens and below them on narrow screens. Figures and tables remain faithful source crops; full-page screenshots are not used as reading content. Ask for `scan`, `understand`, `survey`, PDF, Markdown, chat-only output, or no HTML to override the default depth or artifact.
 
 Deep reading:
 
@@ -79,11 +79,11 @@ Deep reading:
 输出 5C、主张-证据映射、方法重构、关键假设、复现缺口和下一步。
 ```
 
-Goal-driven reading edition:
+Goal-driven HTML reading edition:
 
 ```text
-使用 $read-research-paper 把这篇论文整理为三遍式 PDF 阅读版。
-将需要阅读的原文段落重新录入并逐段翻译；图表保留原样裁图，不使用整页截图。
+使用 $read-research-paper 把这篇论文整理为三遍式 HTML 阅读版。
+重新录入必要原文并逐段翻译，图表保留原样裁图；检查桌面和窄屏布局后返回文件。
 ```
 
 Codex may also invoke the skill implicitly when a request matches its description. OpenAI's documentation describes a skill as a directory containing a required `SKILL.md` and optional resources, and documents `$skill-name` as the explicit invocation form in Codex CLI and the IDE extension: [Build skills](https://learn.chatgpt.com/docs/build-skills).
@@ -97,7 +97,7 @@ skills/
     ├── agents/
     │   └── openai.yaml
     └── references/
-        ├── goal-driven-pdf-edition.md
+        ├── goal-driven-html-edition.md
         └── three-pass-protocol.md
 ```
 

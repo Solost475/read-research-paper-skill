@@ -1,6 +1,6 @@
 ---
 name: read-research-paper
-description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a goal-driven PDF that re-typesets selected source paragraphs as text with translation, retains figures and tables as original crops, and never substitutes full-page screenshots for reading content. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
+description: Read and analyze research papers with a three-pass workflow for rapid screening, evidence-linked understanding, and reconstruction or critique. When explicitly invoked with a paper and no contrary output instruction, automatically produce a responsive goal-driven HTML reading edition that re-typesets selected source paragraphs with translation, retains figures and tables as original crops, and never substitutes full-page screenshots for reading content. Use for academic PDFs or paper webpages when users ask to read, understand, summarize, explain, compare, critique, reproduce, reformat for reading, or take notes on one paper or a small paper set, including 阅读论文、精读论文、论文笔记、三遍阅读、论文重排、论文复现前分析. Do not use for conference-style manuscript peer review as the main task, broad literature search without a seed paper, or paper writing.
 ---
 
 # Read Research Paper
@@ -9,16 +9,16 @@ Use S. Keshav's three-pass method as a depth-control workflow rather than readin
 
 ## Default invocation contract
 
-When the user explicitly invokes `$read-research-paper` and supplies or identifies a paper, default to `reconstruct` and deliver a finished goal-driven PDF reading edition. Do not stop at a chat summary, Markdown draft, source extraction, or unrendered document. Continue through source preparation, all three passes, semantic evidence reorganization, PDF generation, and page-by-page verification before returning the artifact.
+When the user explicitly invokes `$read-research-paper` and supplies or identifies a paper, default to `reconstruct` and deliver a finished goal-driven HTML reading edition. Do not stop at a chat summary, Markdown draft, source extraction, or unrendered document. Continue through source preparation, all three passes, semantic evidence reorganization, HTML generation, and browser verification before returning the artifact.
 
 Honor explicit overrides:
 
-- A requested `scan`, `understand`, or `survey` mode changes reading depth but still produces a PDF unless the user requests text-only output or says not to create a file.
-- A request for notes, Markdown, chat-only analysis, or no PDF changes the deliverable accordingly.
+- A requested `scan`, `understand`, or `survey` mode changes reading depth but still produces HTML unless the user requests another format, text-only output, or no file.
+- A request for PDF, Markdown, chat-only analysis, or no HTML changes the deliverable accordingly.
 - An implicit invocation without a requested format defaults to the proportional text report described below; do not create a large artifact merely because a general paper question matched the skill.
 - If the paper source is missing or ambiguous, obtain or request it before generation. Do not ask between passes unless a missing source or critical ambiguity prevents sound progress.
 
-For the default PDF workflow, read [references/goal-driven-pdf-edition.md](references/goal-driven-pdf-edition.md) completely before building the artifact.
+For the default HTML workflow, read [references/goal-driven-html-edition.md](references/goal-driven-html-edition.md) completely before building the artifact.
 
 ## Core rules
 
@@ -28,7 +28,7 @@ For the default PDF workflow, read [references/goal-driven-pdf-edition.md](refer
 - Separate `Author claim`, `Paper evidence`, `Reader inference`, and `Not reported`. Never convert an inference into a reported fact.
 - Treat selected source passages as evidence for understanding, not as an inventory to count. Organize them under semantic headings that state the question or cognitive role they resolve; do not use labels such as `Excerpt 1`, `摘录 2`, or similar numbering unless the user explicitly requests it.
 - When a passage is labeled as source text, preserve its wording. Keep source text, translation, and reader commentary visually and semantically distinct.
-- In a re-typeset edition, transcribe selected prose into selectable text and place its translation beside or immediately after it. Source-page images and paragraph screenshots are inspection inputs, not substitutes for re-entered prose in the final PDF.
+- In a re-typeset edition, transcribe selected prose into selectable text and place its translation beside or immediately after it. Source-page images and paragraph screenshots are inspection inputs, not substitutes for re-entered prose in the final HTML.
 - Keep figures and tables as faithful crops from the source PDF. Do not redraw, restyle, or retype their visual data unless the user explicitly asks for that transformation.
 - Preserve exact numbers, units, dataset splits, metric direction, and uncertainty. Do not invent missing results, citations, implementation details, or reproducibility claims.
 - Use the user's language unless asked otherwise. Keep standard technical terms in the paper's language when translation would reduce precision.
@@ -90,7 +90,7 @@ Use this structure when the user asks for a staged reading report, annotated edi
 
 Keep this contract proportional to the requested depth. A short `scan` can use compact goal and gate callouts; do not inflate a simple relevance check into a designed reading edition.
 
-For PDF output, follow [references/goal-driven-pdf-edition.md](references/goal-driven-pdf-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The PDF is complete only after it opens successfully, selected prose is present as extractable text, and every rendered page passes visual inspection.
+For HTML output, follow [references/goal-driven-html-edition.md](references/goal-driven-html-edition.md). Preserve an existing visual style when revising it, keep original figures and tables unchanged unless editing is requested, and retain prior editions as rollback artifacts. The HTML is complete only after it opens successfully, selected prose is searchable and selectable, all local resources resolve, and desktop and narrow-screen browser checks pass.
 
 ## Produce the report
 
@@ -125,4 +125,4 @@ Before delivery, verify that:
 - Selected prose is typeset as extractable text with a separate translation; no full-page or paragraph screenshot replaces readable source text.
 - Images in the reading body are limited to necessary visual evidence such as faithful figure and table crops.
 - Each included pass states its goal, reading actions, completion criteria, achieved understanding, unresolved questions, and gate when the deliverable is explicitly staged.
-- Designed artifacts have been rendered and visually checked for overflow, clipping, heading separation, excessive blank space, and readable stage transitions.
+- HTML artifacts have been opened in a browser and checked at desktop and narrow widths for overflow, clipping, readable typography, working navigation, resource loading, and clear stage transitions.
