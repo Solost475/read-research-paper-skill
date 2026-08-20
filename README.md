@@ -54,6 +54,55 @@ git clone https://github.com/Solost475/read-research-paper-skill.git
 
 Keep `SKILL.md` and `references/` together so relative links continue to work. After copying, refresh or restart the host if its skill discovery requires it. If the host does not implement directory-based skill discovery, load `SKILL.md` as the reusable instruction entrypoint and make the linked reference files available at their relative paths.
 
+### Install in Codex
+
+The simplest option is to ask Codex to install the skill from this repository:
+
+```text
+Use $skill-installer to install:
+https://github.com/Solost475/read-research-paper-skill/tree/main/skills/read-research-paper
+```
+
+For a manual personal installation, copy the complete skill directory to `$HOME/.agents/skills/read-research-paper`. For a repository-scoped installation, copy it to `<repository>/.agents/skills/read-research-paper` instead.
+
+PowerShell personal installation, after cloning the repository:
+
+```powershell
+$codexSkillsRoot = Join-Path ([Environment]::GetFolderPath("UserProfile")) ".agents\skills"
+New-Item -ItemType Directory -Force -Path $codexSkillsRoot | Out-Null
+Copy-Item -Recurse -LiteralPath ".\read-research-paper-skill\skills\read-research-paper" -Destination $codexSkillsRoot
+```
+
+Bash personal installation:
+
+```bash
+mkdir -p ~/.agents/skills
+cp -R read-research-paper-skill/skills/read-research-paper ~/.agents/skills/
+```
+
+Codex detects newly installed skills automatically; restart it if the skill does not appear. In Codex CLI or the IDE extension, use `/skills` to inspect installed skills or mention `$read-research-paper` explicitly. See the official [Codex skill documentation](https://learn.chatgpt.com/docs/build-skills).
+
+### Install in Claude Code
+
+For a personal installation available to all projects, copy the complete skill directory to `~/.claude/skills/read-research-paper`. For a project-only installation, copy it to `<repository>/.claude/skills/read-research-paper`.
+
+PowerShell personal installation, after cloning the repository:
+
+```powershell
+$claudeSkillsRoot = Join-Path ([Environment]::GetFolderPath("UserProfile")) ".claude\skills"
+New-Item -ItemType Directory -Force -Path $claudeSkillsRoot | Out-Null
+Copy-Item -Recurse -LiteralPath ".\read-research-paper-skill\skills\read-research-paper" -Destination $claudeSkillsRoot
+```
+
+Bash personal installation:
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R read-research-paper-skill/skills/read-research-paper ~/.claude/skills/
+```
+
+Claude Code normally detects changes in an existing skills directory during the current session. Restart it if the top-level skills directory was created after the session started. Invoke the skill with `/read-research-paper`, or let Claude select it automatically from its description. See the official [Claude Code skill documentation](https://code.claude.com/docs/en/skills).
+
 ## Use
 
 Platform-neutral activation example:

@@ -54,6 +54,55 @@ git clone https://github.com/Solost475/read-research-paper-skill.git
 
 必须让 `SKILL.md` 与 `references/` 保持相对目录关系。复制后，按宿主的发现机制刷新或重启。如果宿主不支持目录式 Skill 发现，则把 `SKILL.md` 作为可复用指令入口加载，并确保智能体能够按相对路径读取其中链接的参考文件。
 
+### 安装到 Codex
+
+最简单的方式是让 Codex 直接从本仓库安装：
+
+```text
+使用 $skill-installer 安装：
+https://github.com/Solost475/read-research-paper-skill/tree/main/skills/read-research-paper
+```
+
+手动安装为个人 Skill 时，把完整目录复制到 `$HOME/.agents/skills/read-research-paper`；如果只希望当前仓库使用，则复制到 `<仓库>/.agents/skills/read-research-paper`。
+
+克隆仓库后的 PowerShell 个人安装命令：
+
+```powershell
+$codexSkillsRoot = Join-Path ([Environment]::GetFolderPath("UserProfile")) ".agents\skills"
+New-Item -ItemType Directory -Force -Path $codexSkillsRoot | Out-Null
+Copy-Item -Recurse -LiteralPath ".\read-research-paper-skill\skills\read-research-paper" -Destination $codexSkillsRoot
+```
+
+Bash 个人安装命令：
+
+```bash
+mkdir -p ~/.agents/skills
+cp -R read-research-paper-skill/skills/read-research-paper ~/.agents/skills/
+```
+
+Codex 通常会自动发现新安装的 Skill；如果没有显示，请重启 Codex。在 Codex CLI 或 IDE 扩展中，可以用 `/skills` 查看已安装 Skill，或用 `$read-research-paper` 显式调用。详见官方 [Codex Skill 文档](https://learn.chatgpt.com/docs/build-skills)。
+
+### 安装到 Claude Code
+
+如果希望所有项目都可使用，把完整目录复制到 `~/.claude/skills/read-research-paper`；如果只希望当前项目使用，则复制到 `<仓库>/.claude/skills/read-research-paper`。
+
+克隆仓库后的 PowerShell 个人安装命令：
+
+```powershell
+$claudeSkillsRoot = Join-Path ([Environment]::GetFolderPath("UserProfile")) ".claude\skills"
+New-Item -ItemType Directory -Force -Path $claudeSkillsRoot | Out-Null
+Copy-Item -Recurse -LiteralPath ".\read-research-paper-skill\skills\read-research-paper" -Destination $claudeSkillsRoot
+```
+
+Bash 个人安装命令：
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R read-research-paper-skill/skills/read-research-paper ~/.claude/skills/
+```
+
+Claude Code 通常会在当前会话中检测已有 Skill 目录的变化；如果是在会话开始后首次创建顶层 Skill 目录，请重启。可以用 `/read-research-paper` 显式调用，也可以让 Claude 根据 description 自动选择。详见官方 [Claude Code Skill 文档](https://code.claude.com/docs/en/skills)。
+
 ## 使用
 
 平台无关的激活示例：
