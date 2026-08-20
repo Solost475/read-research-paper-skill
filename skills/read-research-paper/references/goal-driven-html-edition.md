@@ -81,7 +81,23 @@ Do not place a full PDF page, half-page column screenshot, or ordinary-paragraph
 
 Prefer a deterministic, rerunnable generator. Reuse an existing analysis, translation, anchoring, and crop pipeline when available, but replace page-oriented rendering with semantic HTML and responsive CSS.
 
-Use a collision-safe filename such as `<paper_stem>_three-pass_goal_driven_<language>_edition.html`. Preserve prior artifacts. Keep temporary page renders and extraction intermediates outside the deliverable set.
+Construct a collision-safe filename from verified paper metadata. Unless the user specifies a name, use:
+
+`<short-title>_<year>_<first-author[-etal]>_<language>.html`
+
+- Put the title first because it is the primary identifier. Use a concise slug that preserves enough content-bearing words to distinguish the paper; avoid vague acronyms or over-shortening that makes the title ambiguous.
+- Put the publication year of the selected paper version second.
+- Put the first author's family name third. Append `-etal` when the paper has multiple authors; use only the family name for a single-author paper.
+- Put the edition language or language pair last, such as `zh`, `en`, or `zh-en`.
+- Normalize filesystem-unsafe characters, collapse repeated separators, and keep the complete path comfortably within platform limits. Retain meaningful non-Latin title text when the target filesystem supports it; otherwise transliterate consistently.
+- If an author or year is genuinely unavailable, omit that component rather than replacing the entire name with a workflow label. The title component is mandatory; resolve an unknown title before generation.
+- Never use the skill name, mode, or a generic basename such as `read-research-paper.html`, `three-pass.html`, `reconstruct.html`, `output.html`, or `index.html` unless the user explicitly requests it.
+- For collisions, add a version year, source-version tag, or short source hash. Do not silently overwrite a prior edition.
+- When separate resources are necessary, name the sibling directory `<same-stem>_assets` and keep all links relative to the HTML file.
+
+Use hyphens inside a component and underscores between metadata fields. For example: `large-scale-empirical-study-of-jit-quality-assurance_2013_kamei-etal_zh-en.html`.
+
+Preserve prior artifacts. Keep temporary page renders and extraction intermediates outside the deliverable set.
 
 Escape untrusted source text and metadata before inserting them into HTML. Never execute scripts, event handlers, embedded forms, or active content originating from the paper. If JavaScript is added by the generator, keep it local, minimal, and independent of paper content.
 
@@ -89,14 +105,15 @@ Escape untrusted source text and metadata before inserting them into HTML. Never
 
 Complete the following checks and correct failures before delivery:
 
-1. Parse or validate the generated HTML and confirm that the document title, language, charset, viewport, heading hierarchy, landmarks, and internal anchors are present.
-2. Open the artifact in a browser without a development server when practical. Confirm that all CSS and image resources resolve without network access and that navigation links work.
-3. Verify at a representative desktop width and at least one narrow mobile width. Check typography, bilingual stacking, figure scaling, intentional table or equation scrolling, and absence of unintended document-level horizontal overflow.
-4. Confirm that selected source passages and translations are searchable and selectable HTML text. Confirm that no full-page or ordinary-paragraph screenshots are used as reading content.
-5. Verify that image crops correspond only to necessary figures, tables, or exceptional equations; exclude unrelated page text and margins and preserve readable resolution.
-6. Confirm that every included pass contains its goal, reading actions, observable completion criteria, achievement check, unresolved questions, and gate.
-7. Confirm that no unintended numbered-extract headings remain and that evidence categories remain distinguishable without relying on color alone.
-8. Audit central values, units, metric meaning, and source anchors against the paper. Give extra attention to headline conclusions and the claim-evidence map.
-9. Inspect the browser console when scripts are present and correct errors. Re-run the affected checks after every change.
+1. Confirm that the output filename is derived from the verified paper identity, contains a distinctive title component, and is not named after the skill, reading mode, or a generic output label.
+2. Parse or validate the generated HTML and confirm that the document title, language, charset, viewport, heading hierarchy, landmarks, and internal anchors are present.
+3. Open the artifact in a browser without a development server when practical. Confirm that all CSS and image resources resolve without network access and that navigation links work.
+4. Verify at a representative desktop width and at least one narrow mobile width. Check typography, bilingual stacking, figure scaling, intentional table or equation scrolling, and absence of unintended document-level horizontal overflow.
+5. Confirm that selected source passages and translations are searchable and selectable HTML text. Confirm that no full-page or ordinary-paragraph screenshots are used as reading content.
+6. Verify that image crops correspond only to necessary figures, tables, or exceptional equations; exclude unrelated page text and margins and preserve readable resolution.
+7. Confirm that every included pass contains its goal, reading actions, observable completion criteria, achievement check, unresolved questions, and gate.
+8. Confirm that no unintended numbered-extract headings remain and that evidence categories remain distinguishable without relying on color alone.
+9. Audit central values, units, metric meaning, and source anchors against the paper. Give extra attention to headline conclusions and the claim-evidence map.
+10. Inspect the browser console when scripts are present and correct errors. Re-run the affected checks after every change.
 
 Return a clickable link to the HTML file and briefly state the mode, responsive viewports checked, and verification outcome. If the deliverable uses a sibling assets directory, return the containing folder or package it without breaking relative paths.

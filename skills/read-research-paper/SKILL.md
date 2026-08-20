@@ -11,6 +11,8 @@ Use S. Keshav's three-pass method as a depth-control workflow rather than readin
 
 When the user explicitly invokes `$read-research-paper` and supplies or identifies a paper, default to `reconstruct` and deliver a finished goal-driven HTML reading edition. Do not stop at a chat summary, Markdown draft, source extraction, or unrendered document. Continue through source preparation, all three passes, semantic evidence reorganization, HTML generation, and browser verification before returning the artifact.
 
+Name the artifact from the paper's verified identity, not from this skill, the reading mode, or a generic output label. Unless the user supplies a filename, place a concise title slug first, followed by publication year, author label, and edition language according to the HTML reference.
+
 Honor explicit overrides:
 
 - A requested `scan`, `understand`, or `survey` mode changes reading depth but still produces HTML unless the user requests another format, text-only output, or no file.
@@ -31,6 +33,7 @@ For the default HTML workflow, read [references/goal-driven-html-edition.md](ref
 - In a re-typeset edition, transcribe selected prose into selectable text and place its translation beside or immediately after it. Source-page images and paragraph screenshots are inspection inputs, not substitutes for re-entered prose in the final HTML.
 - Keep figures and tables as faithful crops from the source PDF. Do not redraw, restyle, or retype their visual data unless the user explicitly asks for that transformation.
 - Preserve exact numbers, units, dataset splits, metric direction, and uncertainty. Do not invent missing results, citations, implementation details, or reproducibility claims.
+- Never use `read-research-paper`, `three-pass`, `reconstruct`, `output`, or `index` as the standalone artifact basename. The filename must identify the paper unless the user explicitly chooses another name.
 - Use the user's language unless asked otherwise. Keep standard technical terms in the paper's language when translation would reduce precision.
 - Treat the source paper's human reading-time estimates as depth cues, not agent runtime promises.
 
@@ -126,3 +129,4 @@ Before delivery, verify that:
 - Images in the reading body are limited to necessary visual evidence such as faithful figure and table crops.
 - Each included pass states its goal, reading actions, completion criteria, achieved understanding, unresolved questions, and gate when the deliverable is explicitly staged.
 - HTML artifacts have been opened in a browser and checked at desktop and narrow widths for overflow, clipping, readable typography, working navigation, resource loading, and clear stage transitions.
+- The delivered filename identifies the paper from verified metadata and does not use the skill name or a generic workflow label as its basename.

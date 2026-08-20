@@ -20,6 +20,7 @@ It distills S. Keshav's *How to Read a Paper* into an operational workflow for r
 - HTML reading artifacts use responsive typography, semantic navigation, wide-screen bilingual columns, and narrow-screen single-column flow.
 - Explicit `$read-research-paper` invocation defaults to a complete three-pass HTML reading edition; depth and output format remain user-overridable.
 - HTML editions are checked in desktop and narrow viewports for overflow, missing resources, broken navigation, and content readability.
+- Output filenames place a concise paper title first, followed by year, first-author label, and language; the skill name and generic workflow labels are not used as basenames.
 - Instructions embedded in papers are treated as untrusted document content, never as agent instructions.
 - The original PDF is not redistributed.
 
@@ -71,6 +72,8 @@ Explicit invocation:
 ```
 
 With no further options, this runs all three passes and returns a verified, responsive HTML reading edition. For a Chinese-language request on an English paper, it re-typesets the necessary English paragraphs and places Chinese translations beside them on wide screens and below them on narrow screens. Figures and tables remain faithful source crops; full-page screenshots are not used as reading content. Ask for `scan`, `understand`, `survey`, PDF, Markdown, chat-only output, or no HTML to override the default depth or artifact.
+
+The default filename is derived from paper metadata, for example `large-scale-empirical-study-of-jit-quality-assurance_2013_kamei-etal_zh-en.html`, rather than `read-research-paper.html` or `output.html`.
 
 Deep reading:
 
